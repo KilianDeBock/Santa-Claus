@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ServerUserDailyActivity {
+  userId  BigInt
+  guildId BigInt
+
+  user ServerUser @relation(fields: [userId, guildId], references: [userId, guildId])
+
+  pointsMon Int @default(0)
+  pointsTue Int @default(0)
+  pointsWed Int @default(0)
+  pointsThu Int @default(0)
+  pointsFri Int @default(0)
+  pointsSat Int @default(0)
+  pointsSun Int @default(0)
+  points    Int @default(0)
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@id([guildId, userId])
+  @@unique([userId, guildId])
+}
+
+model ServerUserLevel {
+  userId  BigInt
+  guildId BigInt
+
+  user ServerUser @relation(fields: [userId, guildId], references: [userId, guildId])
+
+  // Checks
+  spamCheck     Int      @default(0)
+  cooldownCount Int      @default(0)
+  cooldownTime  DateTime @default(now())
+  inCall        Boolean  @default(false)
+  callStart     DateTime @default(now())
+  callAlone     Boolean  @default(false)
+
+  // Actual level data:
+  points          Float @default(0)
+  pointsAvailable Float @default(0)
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@id([guildId, userId])
+}
+
+model ServerUser {
+  // Primary key information
+  userId  BigInt
+  guildId BigInt
+
+  serverUserDailyActivity ServerUserDailyActivity[]
+  serverUserLevel         ServerUserLevel[]
+
+  server Server @relation(fields: [guildId], references: [guildId])
+
+  // Date information
+  birthdayDate DateTime?
+  birthday     Int?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt
+
+  @@id([guildId, userId])
+}
+
+model ServerVoiceGrowthChild {
+  // Primary key information
+  channelId BigInt
+  masterId  BigInt
+  guildId   BigInt
+  name      String @default("unknown")
+
+  master ServerVoiceGrowth @relation(fields: [masterId, guildId], references: [channelId, guildId])
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@id([guildId, channelId])
+}
+
+model ServerVoiceGrowth {
+  // Primary key information
+  channelId BigInt
+  guildId   BigInt
+
+  // Settings
+  preset String?
+  prefix String?
+  manual Boolean @default(false)
+
+  // relations
+  childs ServerVoiceGrowthChild[]
+  server Server                   @relation(fields: [guildId], references: [guildId])
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@id([guildId, channelId])
+}
+
+model ServerEasterEgg {
+  // Primary key information
+  guildId BigInt @id
+  server  Server @relation(fields: [guildId], references: [guildId])
+
+  lastJoker DateTime @default(now())
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model ServerCountToNumber {
+  // Primary key information
+  guildId BigInt @id
+  server  Server @relation(fields: [guildId], references: [guildId])
+
+  nextDate   DateTime @default(now())
+  channelId  BigInt   @default(0)
+  threadId   BigInt   @default(0)
+  lastNumber Int      @default(0)
+  lastUserId BigInt   @default(0)
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model ServerLevel {
+  // Primary key information
+  guildId BigInt @id
+  server  Server @relation(fields: [guildId], references: [guildId])
+
+  announcementChannel BigInt?
+  leaderboardChannel  BigInt?
+  leaderboardLastWeek Int?
+  nicknames           Boolean  @default(false)
+  lastLeaderboard     DateTime @default(now())
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model ServerEvent {
+  // Primary key information
+  guildId BigInt @id
+  server  Server @relation(fields: [guildId], references: [guildId])
+
+  birthdayChannel BigInt?
+
+  // Date information
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Server {
+  // Primary key information
+  guildId BigInt @id
+
+  // Settings
+  serverLevel         ServerLevel[]
+  serverEasterEgg     ServerEasterEgg[]
+  serverCountToNumber ServerCountToNumber[]
+  serverVoiceGrowth   ServerVoiceGrowth[]
+
+  // Users
+  serverUser ServerUser[]
+
+  // Date information
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+  ServerEvent ServerEvent[]
+}
