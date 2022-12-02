@@ -3,10 +3,10 @@
   "version": "2.2.0",
   "private": true,
   "description": "The \"Community\" bot is a bot based around community and everything that involves it.\nOur goal is to keep the community active while keeping it safe and fun!\nThis while keeping the project nameless and fun for owners to use without advertisements.",
-  "main": "dist/src/main.js",
+  "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/src/main.js",
+    "start": "npm run build && node dist/main.js",
     "update-commands": "node dist/deployCommands.js",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma generate",
