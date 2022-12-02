@@ -6,7 +6,7 @@
   "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run prisma:migrate && npm run build && node dist/src/main.js",
+    "start": "npm run build && node dist/src/main.js",
     "update-commands": "node dist/deployCommands.js",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma generate",

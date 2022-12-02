@@ -1,4 +1,5 @@
-import { setCommandData as santaData } from './handlers/santabutton';
-import { setCommandData as santaSentData } from './handlers/sendsantas';
+import { buttonData } from './handlers/button';
+import { sendData } from './handlers/send';
+import { randomizeData } from './handlers/randomize';
 
-export default [santaData, santaSentData];
+export default [buttonData, sendData, randomizeData];

@@ -2,42 +2,5 @@
   [],
   [],
   [],
-  [
-    {
-      "user": {
-        "userId": "609399675094695986",
-        "name": "Kilian De Alt",
-        "class": "pgm2",
-        "classLabel": "Mariakerke PGM2",
-        "email": "b",
-        "tip": "Idk"
-      },
-      "buysFor": {
-        "userId": "132487290835435521",
-        "name": "Kilian De Bock",
-        "class": "pgm2",
-        "classLabel": "Mariakerke PGM2",
-        "email": "fuy",
-        "tip": "veras mij"
-      }
-    },
-    {
-      "user": {
-        "userId": "132487290835435521",
-        "name": "Kilian De Bock",
-        "class": "pgm2",
-        "classLabel": "Mariakerke PGM2",
-        "email": "fuy",
-        "tip": "veras mij"
-      },
-      "buysFor": {
-        "userId": "609399675094695986",
-        "name": "Kilian De Alt",
-        "class": "pgm2",
-        "classLabel": "Mariakerke PGM2",
-        "email": "b",
-        "tip": "Idk"
-      }
-    }
-  ]
+  []
 ]

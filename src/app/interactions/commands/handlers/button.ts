@@ -8,9 +8,8 @@ import {
   PermissionsBitField,
   TextChannel,
 } from 'discord.js';
-import client from '../../../../main';
 
-export const setCommandData = {
+export const buttonData = {
   type: 1,
   name: path.basename(__filename, '.js'),
   description: 'Send the button for chat',
@@ -18,7 +17,7 @@ export const setCommandData = {
 } as const;
 
 // Command function, name has to be the same as the command name without right naming scheme! // Todo: Jhonny, fix this?
-async function santabutton(interaction: CommandInteraction): Promise<void> {
+async function button(interaction: CommandInteraction): Promise<void> {
   // Check if command came from guild and set the member variable
   if (!interaction.guild) return;
   const member = interaction.member as GuildMember;
@@ -37,17 +36,18 @@ async function santabutton(interaction: CommandInteraction): Promise<void> {
   const channel = interaction.channel as TextChannel;
 
   const buttons = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      new ButtonBuilder()
-          .setCustomId('startsantachat')
-          .setLabel('Talk to santa!')
-          .setStyle(ButtonStyle.Success)
+    new ButtonBuilder()
+      .setCustomId('startsantachat')
+      .setLabel(
+        'Klik hier om te praten me onze Kerstman! (zorg dat je privéberichten toelaat)'
+      )
+      .setEmoji('🎅')
+      .setStyle(ButtonStyle.Secondary)
   );
 
   await channel.send({
     components: [buttons],
   });
-
-
 }
 
-export default santabutton;
+export default button;

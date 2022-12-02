@@ -1,10 +1,12 @@
 import type { Interaction } from 'discord.js';
-import santabutton from './santabutton';
-import sendsantas from './sendsantas';
+import button from './button';
+import send from './send';
+import randomize from './randomize';
 
 export type CommandHandler = (interaction: Interaction) => Promise<void>;
 
 export default {
-  santabutton,
-  sendsantas,
+  button,
+  send,
+  randomize,
 } as Record<string, unknown>;

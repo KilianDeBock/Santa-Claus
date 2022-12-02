@@ -1,9 +1,9 @@
 import path from 'path';
-import { ButtonStyle, CommandInteraction } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import fs from 'fs';
 import sleep from '../../../../utils/sleep';
 
-export const setCommandData = {
+export const sendData = {
   type: 1,
   name: path.basename(__filename, '.js'),
   description: 'Send all messages to the santas',
@@ -11,7 +11,7 @@ export const setCommandData = {
 } as const;
 
 // Command function, name has to be the same as the command name without right naming scheme! // Todo: Jhonny, fix this?
-async function sendsantas(interaction: CommandInteraction): Promise<void> {
+async function send(interaction: CommandInteraction): Promise<void> {
   // Check if command came from guild and set the member variable
   if (!interaction.guild) return;
 
@@ -20,28 +20,10 @@ async function sendsantas(interaction: CommandInteraction): Promise<void> {
     ephemeral: true,
   });
 
-  const oldDb = fs.readFileSync('./src/data/santas.json', 'utf8');
+  const oldDb = fs.readFileSync('./src/data/santasResult.json', 'utf8');
   const data = JSON.parse(oldDb);
 
-  const classes = [data.mpgm1a, data.mpgm1b, data.opgm1, data.pgm2];
-
-  const result = classes.map((clas) => {
-    // randomize array
-    const shuffledClass = clas.sort(() => Math.random() - 0.5);
-
-    // give partners
-    return shuffledClass.map((item: any, index: number) => ({
-      user: item,
-      buysFor: shuffledClass[index + 1] ?? shuffledClass[0],
-    }));
-  });
-
-  fs.writeFileSync(
-    './src/data/santasResult.json',
-    JSON.stringify(result, null, 2)
-  );
-
-  const santas = result.flat();
+  const santas = data.flat();
 
   for (const santa of santas) {
     const user = await interaction.client.users.fetch(santa.user.userId);
@@ -68,4 +50,4 @@ Maar onthoud; de **prijs is 5 euro**!  :euro:
   });
 }
 
-export default sendsantas;
+export default send;

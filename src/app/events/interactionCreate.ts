@@ -8,6 +8,7 @@ async function interactionCreate(interaction: Interaction): Promise<void> {
     if (interaction.isButton()) handler = getButtonHandler(interaction);
 
     if (handler === undefined) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       interaction.deferUpdate();
       return; // todo: zoek iets uit om te antwoorden
